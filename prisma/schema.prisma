@@ -1,0 +1,54 @@
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  CLIENT
+  CHEF
+  LIVREUR
+  ADMIN
+}
+
+model Client {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  password    String
+  firstName   String   @map("first_name")
+  lastName    String   @map("last_name")
+  phone       String?
+  address     String?
+  city        String?
+  postalCode  String?  @map("postal_code")
+  country     String?  @default("France")
+  role        UserRole @default(CLIENT)
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  sessions    Session[]
+
+  @@map("clients")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  clientId  String   @map("client_id")
+  isActive  Boolean  @default(true) @map("is_active")
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}

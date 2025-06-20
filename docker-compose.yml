@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  postgres-clients:
+    image: postgres:15-alpine
+    container_name: gestion-clients-db
+    restart: always
+    environment:
+      POSTGRES_USER: client_user
+      POSTGRES_PASSWORD: client_password
+      POSTGRES_DB: gestion_clients_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_clients_data:/var/lib/postgresql/data
+    networks:
+      - clients-network
+
+networks:
+  clients-network:
+    driver: bridge
+
+volumes:
+  postgres_clients_data: 
