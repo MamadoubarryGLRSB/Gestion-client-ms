@@ -83,20 +83,20 @@ POST /clients
 ### Test avec curl
 ```bash
 # Connexion
-curl -X POST http://localhost:3000/auth/login \
+curl -X POST http://localhost:3001/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"jean.dupont@example.com","password":"motdepasse123"}'
 
 # Créer un client
-curl -X POST http://localhost:3000/clients \
+curl -X POST http://localhost:3001/clients \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","password":"password123","firstName":"Test","lastName":"User"}'
 ```
 
 ## 🌐 URLs importantes
 
-- **API** : http://localhost:3000
-- **Documentation Swagger** : http://localhost:3000/api
+- **API** : http://localhost:3001
+- **Documentation Swagger** : http://localhost:3001/api
 - **Base de données** : PostgreSQL sur le port 5432
 
 ## 🏗️ Rôles utilisateur
