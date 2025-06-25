@@ -26,6 +26,7 @@ export class ClientsService {
       data: {
         ...createClientDto,
         password: hashedPassword,
+        role: createClientDto.role || 'CLIENT',
       },
     });
 

@@ -5,7 +5,15 @@ import {
   MinLength,
   IsOptional,
   IsPhoneNumber,
+  IsEnum,
 } from 'class-validator';
+
+export enum UserRole {
+  CLIENT = 'CLIENT',
+  CHEF = 'CHEF',
+  LIVREUR = 'LIVREUR',
+  ADMIN = 'ADMIN',
+}
 
 export class CreateClientDto {
   @ApiProperty({
@@ -37,6 +45,18 @@ export class CreateClientDto {
   })
   @IsString()
   lastName: string;
+
+  @ApiPropertyOptional({
+    description: "Rôle de l'utilisateur",
+    enum: UserRole,
+    example: UserRole.CLIENT,
+    default: UserRole.CLIENT,
+  })
+  @IsOptional()
+  @IsEnum(UserRole, {
+    message: 'Le rôle doit être CLIENT, CHEF, LIVREUR ou ADMIN',
+  })
+  role?: UserRole;
 
   @ApiPropertyOptional({
     description: 'Numéro de téléphone français',

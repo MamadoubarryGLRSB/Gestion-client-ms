@@ -15,6 +15,7 @@ import {
 } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
+import { AuthResponseDto } from './dto/auth-response.dto';
 import { JwtAuthGuard } from './jwt.guard';
 import { User } from './user.decorator';
 
@@ -25,7 +26,11 @@ export class AuthController {
 
   @Post('login')
   @ApiOperation({ summary: 'Connexion client' })
-  @ApiResponse({ status: 200, description: 'Connexion réussie' })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'Connexion réussie - Retourne le token JWT et les informations du client avec son rôle',
+    type: AuthResponseDto
+  })
   @ApiResponse({ status: 401, description: 'Identifiants incorrects' })
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
